@@ -1,3 +1,5 @@
+using System.Net;
+using appmvcnet.Extensions;
 using appmvcnet.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
 
@@ -23,13 +25,21 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.AddStatusCodePage();
 
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
+
+app.MapAreaControllerRoute(
+    name: "product",
+    pattern: "{controller}/{action=Index}/{id?}",
+    areaName: "ProductManage"
+);
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+);
 
 app.Run();

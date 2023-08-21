@@ -1,10 +1,16 @@
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using appmvcnet.Models;
 using appmvcnet.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
-namespace appmvcnet.Controllers
+namespace appmvcnet.Areas.ProductManage.Controllers
 {
+[Area("ProductManage")]
     public class ProductsController : Controller
     {
         private readonly ILogger<ProductsController> _logger;
@@ -16,9 +22,11 @@ namespace appmvcnet.Controllers
             _productService = productService;
         }
 
+        [Route("{id?}")]
         public IActionResult Index()
         {
-            return View();
+            var products = _productService.OrderBy(p => p.Name).ToList();
+            return View(products);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
