@@ -1,3 +1,4 @@
+using appmvcnet.Data;
 using appmvcnet.DatabaseContext;
 using appmvcnet.Extensions;
 using appmvcnet.Models;
@@ -71,6 +72,20 @@ builder.Services.AddAuthentication()
         options.AppSecret = fconfig["AppSecret"];
         options.CallbackPath =  "/dang-nhap-tu-facebook";
     });
+
+builder.Services.AddOptions();
+var mailsetting = builder.Configuration.GetSection("MailSettings");
+builder.Services.Configure<MailSettings>(mailsetting);
+builder.Services.AddSingleton<IEmailSender, SendMailService>();
+
+builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
+
+builder.Services.AddAuthorization(options => {
+    options.AddPolicy("ViewManageMenu", builder => {
+        builder.RequireAuthenticatedUser();
+        builder.RequireRole(RoleName.Administrator);
+    });
+});
 
 var app = builder.Build();
 

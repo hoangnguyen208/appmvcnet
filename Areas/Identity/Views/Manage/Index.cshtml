@@ -1,0 +1,132 @@
+﻿@model IndexViewModel
+@{
+    ViewData["Title"] = "Account";
+}
+
+<h1>@ViewData["Title"].</h1>
+<p class="text-success">@ViewData["StatusMessage"]</p>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-4">Profile:</dt>
+        <dd class="col-sm-6"> 
+            <dl class="row">
+                 <dt class = "col-sm-6">
+                    @Html.DisplayNameFor(m => Model.profile.UserName)
+                 </dt>   
+                 <dd class = "col-sm-6">
+                    @Html.DisplayFor(m => Model.profile.UserName)
+                 </dd>
+            </dl>
+             <dl class="row">
+                 <dt class = "col-sm-6">
+                    @Html.DisplayNameFor(m => Model.profile.UserEmail)
+                 </dt>   
+                 <dd class = "col-sm-6">
+                    @Html.DisplayFor(m => Model.profile.UserEmail)
+                 </dd>
+            </dl>
+              <dl class="row">
+                 <dt class = "col-sm-6">
+                    @Html.DisplayNameFor(m => Model.profile.PhoneNumber)
+                 </dt>   
+                 <dd class = "col-sm-6">
+                    @Html.DisplayFor(m => Model.profile.PhoneNumber)
+                 </dd>
+            </dl>
+               <dl class="row">
+                 <dt class = "col-sm-6">
+                    @Html.DisplayNameFor(m => Model.profile.HomeAdress)
+                 </dt>   
+                 <dd class = "col-sm-6">
+                    @Html.DisplayFor(m => Model.profile.HomeAdress)
+                 </dd>
+            </dl>                   
+                <dl class="row">
+                 <dt class = "col-sm-6">
+                    @Html.DisplayNameFor(m => Model.profile.BirthDate)
+                 </dt>   
+                 <dd class = "col-sm-6">
+                    @Html.DisplayFor(m => Model.profile.BirthDate)
+                 </dd>
+            </dl>      
+            <a asp-action="EditProfile" class="btn btn-primary btn-sm">Save</a>
+ 
+        </dd>
+
+        <dt class="col-sm-4">Mật khẩu:</dt>
+        <dd class="col-sm-6">
+            @if (Model.HasPassword)
+            {
+                <a asp-controller="Manage" asp-action="ChangePassword">Change password</a>
+            }
+            else
+            {
+                <a asp-controller="Manage" asp-action="SetPassword">Create password</a>
+            }
+        </dd>
+        <dt class = "col-sm-4">Connect to external account:</dt>
+        <dd class = "col-sm-6">
+            Có @Model.Logins.Count connections. <a asp-controller="Manage" asp-action="ManageLogins">Manage external connections</a>
+        </dd>
+
+        <dt class="col-sm-4">Phone:</dt>
+        <dd class = "col-sm-6">
+            <p>
+                Used for MFA
+            </p>
+            @(Model.PhoneNumber ?? "No")
+                @if (Model.PhoneNumber != null)
+                {
+                    <text>:</text>
+                    <text>&nbsp;&nbsp;<a asp-controller="Manage" asp-action="AddPhoneNumber">Change</a>&nbsp;&nbsp;</text>
+                    <form asp-controller="Manage" asp-action="RemovePhoneNumber" method="post" role="form">
+                        <button type="submit" class="btn btn-danger btn-sm">Remove phone number</button>
+                    </form>
+                }
+                else
+                {
+                    <text>&nbsp;&nbsp;<a asp-controller="Manage" asp-action="AddPhoneNumber">Add phone number</a></text>
+                }
+        </dd>
+
+        <dt class="col-sm-4">MFA:</dt>
+        <dd class = "col-sm-6">
+            <!--<p>
+                There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkID=532713">this article</a>
+                for setting up this application to support two-factor authentication.
+            </p>-->
+            @if (Model.TwoFactor)
+                {
+                    <form asp-controller="Manage" asp-action="DisableTwoFactorAuthentication" method="post" class="form-horizontal" role="form">
+                        <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                    </form>
+                }
+                else
+                {
+                    <form asp-controller="Manage" asp-action="EnableTwoFactorAuthentication" method="post" class="form-horizontal" role="form">
+                        <button type="submit" class="btn btn-primary btn-sm">Activate</button>
+                    </form>
+                }
+        </dd>
+
+        <dt class="col-sm-4">Confirmation app:</dt>
+        <dd class = "col-sm-6">
+            @if (Model.AuthenticatorKey == null)
+            {
+                <form asp-controller="Manage" asp-action="ResetAuthenticatorKey" method="post" class="form-horizontal" role="form">
+                    <button type="submit" class="btn btn-sm btn-primary">Create code</button>
+                </form>
+            }
+            else
+            {
+                <text>Confirmation code: @Model.AuthenticatorKey</text>
+                <p>Enter this for MFA</p>
+                <form asp-controller="Manage" asp-action="GenerateRecoveryCode" method="post" class="form-horizontal" role="form">
+                   <button type="submit" class="btn btn-sm btn-primary">Create recovery code</button>
+                   <p>Recovery code for MFA</p>
+                </form>
+            }
+        </dd>
+    </dl>
+</div>
