@@ -1,7 +1,9 @@
 using System.Net;
+using appmvcnet.DatabaseContext;
 using appmvcnet.Extensions;
 using appmvcnet.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,11 @@ builder.Services.Configure<RazorViewEngineOptions>(options => {
     options.ViewLocationFormats.Add("/MyViews/{1}/{0}" + RazorViewEngine.ViewExtension);
 });
 builder.Services.AddSingleton<ProductService>();
+
+builder.Services.AddDbContext<AppDbContext>(options => {
+    string connectString = builder.Configuration.GetConnectionString("Default");
+    options.UseSqlServer(connectString);
+});
 
 var app = builder.Build();
 

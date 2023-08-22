@@ -1,0 +1,56 @@
+@using Microsoft.EntityFrameworkCore
+@using System.Data
+@using appmvcnet.DatabaseContext
+
+@inject AppDbContext dbContext
+
+@{
+    ViewData["Title"] = "Db info";
+    var connect = dbContext.Database.GetDbConnection();
+    var dbName = connect.Database;
+    var canConnect = dbContext.Database.CanConnect();
+}
+
+<partial name="_AlertMessage" />
+
+<h2>Db info</h2>
+<p>Db: @dbName</p>
+<p>Source: @connect.DataSource</p>
+<p>State: @connect.State</p>
+<hr>
+<h2>Migrations</h2>
+@foreach (var migration in dbContext.Database.GetAppliedMigrations())
+{
+    <p>@migration</p>
+}
+@foreach (var migration in dbContext.Database.GetPendingMigrations())
+{
+    <p>@migration (pending)</p>
+}
+
+@if (!canConnect)
+{
+    <p class="alert alert-danger">Could not connect to the db</p>
+}
+
+@if (dbContext.Database.GetPendingMigrations().Any())
+{
+    <form method="post">
+        <button class="btn btn-success" asp-action="Migrate">Create Db (Update migrations)</button>
+    </form>
+}
+
+@if (canConnect)
+{
+    <h2>Tables</h2>
+    await dbContext.Database.OpenConnectionAsync();
+    var tables = dbContext.Database.GetDbConnection().GetSchema("Tables");
+    <ul>
+        @foreach (DataRow row in tables.Rows)
+        {
+            <li>@row["TABLE_NAME"]</li>
+        }
+    </ul>
+
+    <a class="btn btn-danger" asp-action="DeleteDb">Delete Db: @dbName</a>
+}
