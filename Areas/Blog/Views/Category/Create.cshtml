@@ -45,16 +45,16 @@
     <a asp-action="Index">Categories</a>
 </div>
 
-@* @{
+@{
     var summernote  = new appmvcnet.Models.Summernote("#Description");
 }
-<partial name="_Summernote" model="summernote" /> *@
+<partial name="_Summernote" model="summernote" />
 
 @* @{
     _AdminSidebarService.SetActive("Category", "Create", "Blog");
-}
+} *@
 
-@section Sidebar
+@* @section Sidebar
 {
     @Html.Raw(_AdminSidebarService.renderHtml())
 } *@

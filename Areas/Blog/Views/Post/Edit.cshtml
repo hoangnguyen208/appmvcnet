@@ -74,14 +74,14 @@
 }
 
 
-@* @{
-    var summernote  = new App.Models.Summernote("#Content") {
+@{
+    var summernote  = new appmvcnet.Models.Summernote("#Content") {
         height = 500
     };
 }
 <partial name="_Summernote" model="summernote" />
 
-@{
+@* @{
     _AdminSidebarService.SetActive("Post", "Index", "Blog");
 }
 
