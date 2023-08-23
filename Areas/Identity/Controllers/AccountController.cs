@@ -409,7 +409,7 @@ namespace appmvcnet.Areas.Identity.Controllers
                 await _emailSender.SendEmailAsync(
                     model.Email,
                     "Reset Password",
-                    $"Hãy bấm <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>vào đây</a> để đặt lại mật khẩu.");
+                    $"Click <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>here</a> to reset password.");
 
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
    
