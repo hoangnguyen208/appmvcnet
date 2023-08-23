@@ -1,4 +1,5 @@
 using appmvcnet.Models;
+using appmvcnet.Models.Blog;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,6 +30,11 @@ namespace appmvcnet.DatabaseContext
                 }
             }
 
-        }        
+            modelBuilder.Entity<Category>(entity => {
+                entity.HasIndex(c => c.Slug);
+            });
+        }      
+
+        public DbSet<Category> Categories { get; set; }  
     }
 }
