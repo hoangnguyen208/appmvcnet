@@ -13,20 +13,24 @@ namespace appmvcnet.Areas.Identity.Models.AccountViewModels
     {
         [Required]
         [EmailAddress]
+        [Display(Prompt = "Email")]
         public string Email { get; set; }
 
 
         [Required]
         [DataType(DataType.Password)]
+        [Display(Prompt = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Passwords did not match.")]
+        [Display(Prompt = "Confirm Password")]
         public string ConfirmPassword { get; set; }
 
 
         [DataType(DataType.Text)]
         [Required]
+        [Display(Prompt = "UserName")]
         public string UserName { get; set; }
 
     }

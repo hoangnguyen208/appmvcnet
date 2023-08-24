@@ -1,3 +1,4 @@
+using appmvcnet.Areas.Product.Services;
 using appmvcnet.Data;
 using appmvcnet.DatabaseContext;
 using appmvcnet.Extensions;
@@ -16,7 +17,6 @@ builder.Services.AddRazorPages();
 builder.Services.Configure<RazorViewEngineOptions>(options => {
     options.ViewLocationFormats.Add("/MyViews/{1}/{0}" + RazorViewEngine.ViewExtension);
 });
-builder.Services.AddSingleton<ProductService>();
 
 builder.Services.AddDbContext<AppDbContext>(options => {
     string connectString = builder.Configuration.GetConnectionString("Default");
@@ -80,12 +80,19 @@ builder.Services.Configure<MailSettings>(mailsetting);
 builder.Services.AddSingleton<IEmailSender, SendMailService>();
 
 builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
+builder.Services.AddTransient<CartService>();
 
 builder.Services.AddAuthorization(options => {
     options.AddPolicy("ViewManageMenu", builder => {
         builder.RequireAuthenticatedUser();
         builder.RequireRole(RoleName.Administrator);
     });
+});
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(cfg => {
+    cfg.Cookie.Name = "appmvc";
+    cfg.IdleTimeout = new TimeSpan(0,30,0);
 });
 
 var app = builder.Build();
@@ -106,6 +113,7 @@ app.UseStaticFiles(new StaticFileOptions() {
     ),
     RequestPath = "/contents"
 });
+app.UseSession();
 app.AddStatusCodePage();
 
 app.UseRouting();

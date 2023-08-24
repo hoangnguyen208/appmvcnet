@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/appmvcnet.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" asp-append-version="true" />
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -28,8 +29,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-action="Index" asp-controller="ViewPost" asp-area="Blog">Blog</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-action="Index" asp-controller="ViewProduct" asp-area="Product">Product</a>
+                        </li>
                         <partial name="_MenuManagePartial" />
                     </ul>
+                    @await Html.PartialAsync("_CartPartial")
                     <partial name="_LoginPartial" />
                 </div>
             </div>

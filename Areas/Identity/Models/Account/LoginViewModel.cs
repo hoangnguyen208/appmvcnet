@@ -12,11 +12,13 @@ namespace appmvcnet.Areas.Identity.Models.AccountViewModels
     public class LoginViewModel
     {
         [Required]
+        [Display(Prompt = "Username or Email")]
         public string UserNameOrEmail { get; set; }
 
 
         [Required]
         [DataType(DataType.Password)]
+        [Display(Prompt = "Password")]
         public string Password { get; set; }
 
         public bool RememberMe { get; set; }

@@ -1,0 +1,27 @@
+@model appmvcnet.Models.Product.ProductModel
+@* @using App.Menu *@
+@* @inject AdminSidebarService _AdminSidebarService *@
+@{
+    ViewData["Title"] = "Delete product";
+    @* Layout =  "/Views/Shared/_LayoutAdmin.cshtml";     *@
+}
+
+<p>Are you sure you want to delete?</p>
+<h4>@Model.Title</h4>
+<div>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ProductID" />
+        <input type="submit" value="Xóa" class="btn btn-danger" /> |
+        <a asp-action="Index">Products</a>
+    </form>
+</div>
+
+
+@* @{
+    _AdminSidebarService.SetActive("ProductManage", "Index", "Product");
+}
+
+@section Sidebar
+{
+    @Html.Raw(_AdminSidebarService.renderHtml())
+} *@
