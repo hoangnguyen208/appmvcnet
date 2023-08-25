@@ -1,11 +1,14 @@
 @using Microsoft.EntityFrameworkCore
 @using System.Data
 @using appmvcnet.DatabaseContext
+@using appmvcnet.Menu
+@inject AdminSidebarService _AdminSidebarService
 
 @inject AppDbContext dbContext
 
 @{
     ViewData["Title"] = "Db info";
+    Layout = "/Views/Shared/_LayoutAdmin.cshtml";
     var connect = dbContext.Database.GetDbConnection();
     var dbName = connect.Database;
     var canConnect = dbContext.Database.CanConnect();
@@ -54,4 +57,13 @@
 
     <a class="btn btn-danger" asp-action="DeleteDb">Delete Db: @dbName</a>
     <a class="btn btn-info" asp-action="SeedData">Seed Data</a>
+}
+
+@{
+    _AdminSidebarService.SetActive("DbManage", "Index", "Database");
+}
+
+@section Sidebar
+{
+    @Html.Raw(_AdminSidebarService.renderHtml())
 }

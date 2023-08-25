@@ -1,9 +1,9 @@
 @model appmvcnet.Models.Product.CategoryProduct
-@* @using App.Menu *@
-@* @inject AdminSidebarService _AdminSidebarService *@
+@using appmvcnet.Menu
+@inject AdminSidebarService _AdminSidebarService
 @{
     ViewData["Title"] = "Delete product category";
-    @* Layout =  "/Views/Shared/_LayoutAdmin.cshtml"; *@
+    Layout =  "/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -28,11 +28,11 @@
 </div>
 
 
-@* @{
+@{
     _AdminSidebarService.SetActive("CategoryProduct", "Index", "Product");
 }
 
 @section Sidebar
 {
     @Html.Raw(_AdminSidebarService.renderHtml())
-} *@
+}

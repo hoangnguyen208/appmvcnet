@@ -1,6 +1,10 @@
 @model AddUserRoleModel
+@using appmvcnet.Menu
+@inject AdminSidebarService _AdminSidebarService
+
 @{
     ViewData["Title"] = "Add role";
+    Layout = "/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h4>Set role for user: @Model.user.UserName</h4>
@@ -71,4 +75,13 @@
     </script>
 
     <partial name="_ValidationScriptsPartial" />
+}
+
+@{
+    _AdminSidebarService.SetActive("User", "Index", "Identity");
+}
+
+@section Sidebar
+{
+    @Html.Raw(_AdminSidebarService.renderHtml())
 }

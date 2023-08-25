@@ -1,5 +1,9 @@
+@using appmvcnet.Menu
+@inject AdminSidebarService _AdminSidebarService
+
 @{
     ViewData["Title"] = "Delete Db";
+    Layout = "/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -12,3 +16,12 @@
     <hr>
     <a asp-action="Index">Back</a>
 </form>
+
+@{
+    _AdminSidebarService.SetActive("DbManage", "Index", "Database");
+}
+
+@section Sidebar
+{
+    @Html.Raw(_AdminSidebarService.renderHtml())
+}

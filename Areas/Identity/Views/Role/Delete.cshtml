@@ -1,8 +1,12 @@
 @model IdentityRole
+@using appmvcnet.Menu
+@inject AdminSidebarService _AdminSidebarService
+
 @{
     ViewData["Title"] = "Delete role";
+    Layout = "/Views/Shared/_LayoutAdmin.cshtml";
 }
-<h2>@ViewData["Title"]</h2>
+
 <partial name="_StatusMessage"></partial>
 
 <hr>
@@ -14,7 +18,7 @@
          
             <p>Are you sure you want to delete <strong>@Model.Name</strong></p>
             <div class="form-group">
-                <input type="submit" value="Đồng ý" class="btn btn-danger" />
+                <input type="submit" value="Confirm" class="btn btn-danger" />
                 <a class="btn btn-primary" asp-action="Index">Roles</a>
             </div>
         </form>
@@ -24,4 +28,13 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@{
+    _AdminSidebarService.SetActive("Role", "Index", "Identity");
+}
+
+@section Sidebar
+{
+    @Html.Raw(_AdminSidebarService.renderHtml())
 }

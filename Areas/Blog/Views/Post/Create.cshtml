@@ -1,10 +1,10 @@
 @model appmvcnet.Areas.Blog.Models.CreatePostModel
-@* @using App.Menu *@
-@* @inject AdminSidebarService _AdminSidebarService *@
+@using appmvcnet.Menu
+@inject AdminSidebarService _AdminSidebarService
 @{
     ViewData["Title"] = "Create post";
     var list = ViewData["categories"] as MultiSelectList;
-    @* Layout =  "/Views/Shared/_LayoutAdmin.cshtml"; *@
+    Layout =  "/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <hr />
@@ -79,11 +79,11 @@
 }
 <partial name="_Summernote" model="summernote" />
 
-@* @{
+@{
     _AdminSidebarService.SetActive("Post", "Create", "Blog");
 }
 
 @section Sidebar
 {
     @Html.Raw(_AdminSidebarService.renderHtml())
-} *@
+}

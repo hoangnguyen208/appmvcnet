@@ -1,6 +1,10 @@
 @model UserListModel
+@using appmvcnet.Menu
+@inject AdminSidebarService _AdminSidebarService
+
 @{
     ViewData["Title"] = "Members";
+    Layout = "/Views/Shared/_LayoutAdmin.cshtml";
 }
 <h2>@ViewData["Title"]</h2>
 <partial name="_StatusMessage"></partial>
@@ -42,3 +46,12 @@
 }
 
 <partial name="_PagingXTL" model="@pagingmodel" />
+
+@{
+    _AdminSidebarService.SetActive("User", "Index", "Identity");
+}
+
+@section Sidebar
+{
+    @Html.Raw(_AdminSidebarService.renderHtml())
+}

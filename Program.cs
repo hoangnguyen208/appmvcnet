@@ -2,9 +2,11 @@ using appmvcnet.Areas.Product.Services;
 using appmvcnet.Data;
 using appmvcnet.DatabaseContext;
 using appmvcnet.Extensions;
+using appmvcnet.Menu;
 using appmvcnet.Models;
 using appmvcnet.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -81,6 +83,8 @@ builder.Services.AddSingleton<IEmailSender, SendMailService>();
 
 builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
 builder.Services.AddTransient<CartService>();
+builder.Services.AddTransient<IActionContextAccessor, ActionContextAccessor>();
+builder.Services.AddTransient<AdminSidebarService>();
 
 builder.Services.AddAuthorization(options => {
     options.AddPolicy("ViewManageMenu", builder => {
@@ -94,6 +98,7 @@ builder.Services.AddSession(cfg => {
     cfg.Cookie.Name = "appmvc";
     cfg.IdleTimeout = new TimeSpan(0,30,0);
 });
+
 
 var app = builder.Build();
 

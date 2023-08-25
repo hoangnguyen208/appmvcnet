@@ -1,9 +1,9 @@
 @model appmvcnet.Models.Product.CategoryProduct
-@* @using appmvcnet.Menu *@
-@* @inject AdminSidebarService _AdminSidebarService *@
+@using appmvcnet.Menu
+@inject AdminSidebarService _AdminSidebarService
 @{
     ViewData["Title"] = "Product category";   
-    @* Layout =  "/Views/Shared/_LayoutAdmin.cshtml";           *@
+    Layout =  "/Views/Shared/_LayoutAdmin.cshtml";          
 }
 
 <h4>Category</h4>
@@ -51,11 +51,11 @@
 <partial name="_Summernote" model="summernote" />
 
 
-@* @{
+@{
     _AdminSidebarService.SetActive("CategoryProduct", "Create", "Product");
 }
 
 @section Sidebar
 {
     @Html.Raw(_AdminSidebarService.renderHtml())
-} *@
+}
