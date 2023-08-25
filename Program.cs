@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.ConfigureKestrel(options => {
+    options.ListenAnyIP(8090);
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
